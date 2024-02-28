@@ -15,7 +15,8 @@
 
 
     <div class="container my-4 py-4">
-        <form action="/project/dummy/partials/handelonboarding/__handeluserinfo.php" method="post">
+        <form action="/project/dummy/partials/handelonboarding/__handeluserinfo.php" method="post"
+            enctype="multipart/form-data">
             <div class="mb-3 d-flex">
                 <img src="../assests/userdefault.jpg" alt="" width="200px" height="200px">
                 <div class="mb-3 d-flex flex-column justify-content-center">
@@ -23,9 +24,28 @@
                     <input type="file" class="form-control" id="userpicture" name="userpicture">
                 </div>
             </div>
+            <?php 
+                session_start();
+                if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
+                    $usertype = NULL;
+                    if($_SESSION['usertype'] === "HOA"){
+                        $usertype = "Hospital Admin";
+                    }elseif($_SESSION['usertype'] === "DOC"){
+                        $usertype = "Doctor";
+                    }
+
+                 echo '<div class="mb-3">
+                        <label for="usertype" class="form-label">User type</label>
+                        <select class="form-select" aria-label="Default select example" name="usertype">
+                            <option selected disabled>'.$_SESSION['usertype'].'</option>
+                        </select>
+                        </div>';   
+                }
+            ?>
+
             <div class="mb-3">
-                <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <label for="username" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="username" name="username">
             </div>
             <div class="mb-3">
                 <label for="dob" class="form-label">Date of birth</label>

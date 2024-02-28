@@ -13,21 +13,33 @@
 
     <?php include '../partials/__header.php'; ?>
 
+    <?php
+    
+    if(isset($_GET['logSuccess']) && $_GET['logSuccess']=="false"){
+        echo '<div class="alert alert-danger alert-dismissible fade show my-0" role="alert">
+      <strong>Error! </strong>' .$_GET['error']. '
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>';
+    }
+    
+    ?>
+
 
     <div class="container my-4 py-4">
+        <h1 class="my-3">Login</h1>
         <form action="/project/dummy/partials/handelonboarding/__handelsignup.php" method="post">
             <div class="mb-3">
                 <label for="usertype" class="form-label">User type</label>
                 <select class="form-select" aria-label="Default select example" name="usertype">
                     <option selected disabled>Select User type</option>
-                    <option value="admin">Admin</option>
-                    <option value="hadmin">Hospital Admin</option>
-                    <option value="doctor">Doctor</option>
+                    <option value="ADM">Admin</option>
+                    <option value="HOA">Hospital Admin</option>
+                    <option value="DOC">Doctor</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                <label for="useremail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="useremail" name="useremail" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
