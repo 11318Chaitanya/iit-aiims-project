@@ -26,22 +26,22 @@
                     $_SESSION['sno'] = $row['sno'];
 
                     if ($row['user_type'] === "ADM") {
-                        header('location: /project/dummy/main/dashboard.php?1usertype='.$row['user_type'].'');
+                        header('location: /project/healthcarepro/main/dashboard.php?1usertype='.$row['user_type'].'');
                         exit();
                     } elseif ($row['user_type'] === "HOA" && $row['register_progress'] === "UI") {
-                        header('location: /project/dummy/onboarding/userinfo.php');
+                        header('location: /project/healthcarepro/onboarding/userinfo.php');
                         exit();
                     } elseif ($row['user_type'] === "HOA" && $row['register_progress'] === "HI") {
-                        header('location: /project/dummy/onboarding/hospitalinfo.php');
+                        header('location: /project/healthcarepro/onboarding/hospitalinfo.php');
                         exit();
                     } elseif ($row['user_type'] === "HOA" && $row['register_progress'] === "CO") {
-                        header('location: /project/dummy/main/dashboard.php?2usertype='.$row['user_type'].'');
+                        header('location: /project/healthcarepro/main/dashboard.php?2usertype='.$row['user_type'].'');
                         exit();
                     } elseif ($row['user_type'] === "DOC" && $row['register_progress'] === "UI") {
-                        header('location: /project/dummy/onboarding/userinfo.php');
+                        header('location: /project/healthcarepro/onboarding/userinfo.php');
                         exit();
                     } elseif ($row['user_type'] === "DOC" && $row['register_progress'] === "CO") {
-                        header('location: /project/dummy/main/dashboard.php?3usertype='.$row['user_type'].'');
+                        header('location: /project/healthcarepro/main/dashboard.php?3usertype='.$row['user_type'].'');
                         exit();
                     }
                     else{
@@ -56,7 +56,7 @@
         else{
             $userError = "User do not exist";
         }
-        header("location: /project/dummy/onboarding/login.php?logSuccess=false&error=$userError");
+        header("location: /project/healthcarepro/onboarding/login.php?logSuccess=false&error=$userError");
     }
 
 

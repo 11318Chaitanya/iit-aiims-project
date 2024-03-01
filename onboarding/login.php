@@ -27,7 +27,7 @@
 
     <div class="container my-4 py-4">
         <h1 class="my-3">Login</h1>
-        <form action="/project/dummy/partials/handelonboarding/__handelsignup.php" method="post">
+        <form action="/project/healthcarepro/partials/handelonboarding/__handelsignup.php" method="post">
             <div class="mb-3">
                 <label for="usertype" class="form-label">User type</label>
                 <select class="form-select" aria-label="Default select example" name="usertype">

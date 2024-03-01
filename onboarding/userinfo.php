@@ -15,7 +15,7 @@
 
 
     <div class="container my-4 py-4">
-        <form action="/project/dummy/partials/handelonboarding/__handeluserinfo.php" method="post"
+        <form action="/project/healthcarepro/partials/handelonboarding/__handeluserinfo.php" method="post"
             enctype="multipart/form-data">
             <div class="mb-3 d-flex">
                 <img src="../assests/userdefault.jpg" alt="" width="200px" height="200px">

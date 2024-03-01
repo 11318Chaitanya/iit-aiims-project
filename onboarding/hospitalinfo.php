@@ -14,7 +14,7 @@
     <?php include '../partials/__header.php'; ?>
 
     <div class="container my-4 py-4">
-        <form action="/project/dummy/partials/handelonboarding/__handelhospitalinfo.php" method="post">
+        <form action="/project/healthcarepro/partials/handelonboarding/__handelhospitalinfo.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="hospitalname" class="form-label">Hospital Name</label>
                 <input type="text" class="form-control" id="hospitalname" name="hospitalname">

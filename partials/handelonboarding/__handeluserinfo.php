@@ -27,14 +27,19 @@
         // for updating user register_progress
 
         if($result_ui){
-            $sql = "UPDATE `logusers` SET `register_progress` = 'HI' WHERE `logusers`.`sno` = 4";
-            $result = mysqli_query($conn, $sql);
 
-            if($result){
-                if($_SESSION['usertype'] === "HOA"){
-                    header('location: /project/dummy/onboarding/hospitalinfo.php');
-                } elseif ($_SESSION['usertype'] === "DOC") {
-                    header('location: /project/dummy/main/dashboard.php');
+            if($_SESSION['usertype'] === "HOA"){
+                $sql = "UPDATE `logusers` SET `register_progress` = 'HI' WHERE `logusers`.`sno` = '$user_id'";
+                $result = mysqli_query($conn, $sql);
+                if($result){
+                    header('location: /project/healthcarepro/onboarding/hospitalinfo.php');
+                }
+
+            } elseif ($_SESSION['usertype'] === "DOC") {
+                $sql = "UPDATE `logusers` SET `register_progress` = 'CO' WHERE `logusers`.`sno` = '$user_id'";
+                $result = mysqli_query($conn, $sql);
+                if($result){
+                    header('location: /project/healthcarepro/main/dashboard.php');
                 }
             }
         }
