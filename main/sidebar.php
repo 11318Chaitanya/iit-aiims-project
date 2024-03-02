@@ -117,7 +117,7 @@
         <span class="fs-4">Sidebar</span>
     </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-auto" id="navList">
         <li class="nav-item">
             <a href="#" class="nav-link active" aria-current="page">
                 <svg class="bi me-2" width="16" height="16">
@@ -127,7 +127,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
+            <a href="/project/healthcarepro/main/dashboard.php" class="nav-link link-dark">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#speedometer2"></use>
                 </svg>
@@ -176,3 +176,4 @@
         </ul>
     </div>
 </div>
+
