@@ -53,21 +53,26 @@
             </section>
 
             <section class="section my-2 py-2 px-4">
+                <h2>Your patients:</h2>
                 <table class="table" id="myTable">
                     <thead>
                         <tr>
-                            <th scope="col">Sno</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Description</th>
+                            <th scope="col">Bed No</th>
+                            <th scope="col">Bed Type</th>
+                            <th scope="col">Patient Id</th>
+                            <th scope="col">Patient Name</th>
+                            <th scope="col">Severity</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                            <td>ICU</td>
+                            <td><a href="">RK19950208_3125</a></td>
+                            <td>Ritik Kumar</td>
+                            <td>High</td>
+                            <td><a href="#" class="btn btn-primary me-2">Edit</a><a href="#" class="btn btn-danger">Remove</a></td>
                         </tr>
                     </tbody>
                 </table>

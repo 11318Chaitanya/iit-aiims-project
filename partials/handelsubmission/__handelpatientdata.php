@@ -7,6 +7,19 @@
 
         $user_id = (int)$_SESSION['sno'];
 
+        // getting hospital id according to user id 
+        if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
+            $sql = "SELECT * FROM `hospitaldata` WHERE `doctor_id` = '$user_id'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $hospital_id = $row['hospital_id'];
+        } else{
+            $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $hospital_id = $row['hospital_id'];
+        }
+
         $patient_name = $_POST['patientname'];
         $patient_gender = $_POST['patientgender'];
         $patient_dob = $_POST['patientdob'];
@@ -20,15 +33,10 @@
         $patient_medication_text = $_POST['patientmedicationtext'];
         $patient_medical_history = $_POST['patientmedicalhistory'];
         $doctor_comment = $_POST['doctorcomment'];
-
-        // getting hospital id from doctor's (users) id 
-        $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $hospital_id = $row['hospital_id'];
+        $doctor_id = $_POST['doctorid'];
 
         // posting text data to database
-        $sql_pdt = "INSERT INTO `patientinfo` (`patient_name`, `patient_gender`, `patient_dob`, `patient_contact_num`, `patient_adhar_num`, `patient_bp`, `patient_sugar`, `patient_severity`, `patient_diagnostic_text`, `patient_medication_text`, `patient_medical_history`, `doctor_comment`,`patient_id`, `hospital_id`, `user_id`, `tstamp`) VALUES ('$patient_name', '$patient_gender', '$patient_dob', '$patient_contact_num', '$patient_adhar_num', '$patient_bp', '$patient_sugar', '$patient_severity', '$patient_diagnostic_text', '$patient_medication_text', '$patient_medical_history' ,'$doctor_comment','$patient_id', '$hospital_id', '$user_id', current_timestamp())";
+        $sql_pdt = "INSERT INTO `patientinfo` (`patient_name`, `patient_gender`, `patient_dob`, `patient_contact_num`, `patient_adhar_num`, `patient_bp`, `patient_sugar`, `patient_severity`, `patient_diagnostic_text`, `patient_medication_text`, `patient_medical_history`, `doctor_comment`,`patient_id`, `hospital_id`, `doctor_id`, `tstamp`) VALUES ('$patient_name', '$patient_gender', '$patient_dob', '$patient_contact_num', '$patient_adhar_num', '$patient_bp', '$patient_sugar', '$patient_severity', '$patient_diagnostic_text', '$patient_medication_text', '$patient_medical_history' ,'$doctor_comment','$patient_id', '$hospital_id', '$doctor_id', current_timestamp())";
 
         $result_pdt = mysqli_query($conn, $sql_pdt);
         if($result_pdt){

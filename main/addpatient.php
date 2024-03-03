@@ -1,3 +1,6 @@
+<?php
+    session_start(); 
+?>
 <!doctype html>
 <html lang="en">
 
@@ -24,10 +27,11 @@
     <div class="d-flex">
 
         <?php include 'sidebar.php';?>
+        <?php include '../partials/__dbconnect.php'?>
 
         <main class="d-flex mx-2">
             <div class="container my-4">
-            <?php
+                <?php
             
             if(isset($_GET['subSuccess']) && $_GET['subSuccess']=="true"){
                 echo '<div class="alert alert-success alert-dismissible fade show my-0 mb-2" role="alert">
@@ -88,7 +92,8 @@
                                 <input type="text" class="form-control" id="patientid" name="patientid" readonly>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-primary" onclick="generatePatientId()">Generate</button>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="generatePatientId()">Generate</button>
                             </div>
                         </div>
                     </div>
@@ -153,8 +158,44 @@
                         <textarea name="doctorcomment" id="doctorcomment" cols="30" rows="5"
                             class="form-control"></textarea>
                     </div>
+                    <div class="mb-3">
+                        <label for="doctor_id" class="form-label">Admitted under</label>
+                        <select class="form-select" aria-label="Default select example" name="doctorid">
+                            <?php
+                                if(isset($_SESSION['sno']) && isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
+                                    $sql = "SELECT * FROM `userinfo` WHERE `user_id`='" . $_SESSION['sno'] . "'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo "<option value='{$row['user_id']}' selected>{$row['username']}</option>";
+                                }
+                                if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
+                                    $sql_hos = "SELECT * FROM `hospitaldata` WHERE `doctor_id`='".$_SESSION['sno']."'";
+                                }
+                                else{
+                                    $sql_hos = "SELECT * FROM `hospitalinfo` WHERE `user_id`='".$_SESSION['sno']."'";
+                                }
+                                $result_hos = mysqli_query($conn, $sql_hos);
+                                $row_hos = mysqli_fetch_assoc($result_hos);
+                                $hospital_id = $row_hos['hospital_id'];
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                                $sql_hos_doc = "SELECT * FROM `hospitaldata` WHERE `hospital_id`='$hospital_id'";
+                                $result_hos_doc = mysqli_query($conn, $sql_hos_doc);
+                                while ($row_hos_doc = mysqli_fetch_assoc($result_hos_doc)){
+                                    $sql_doc = "SELECT * FROM `userinfo` WHERE `user_id`='" . $row_hos_doc['doctor_id'] . "' AND `user_id` != '" . $_SESSION['sno'] . "'";
+                                    $result_doc = mysqli_query($conn, $sql_doc);
+                                    $row_doc = mysqli_fetch_assoc($result_doc);
+                                    if($row_doc['user_id'] != NULL){
+                                        echo "<option value='{$row_doc['user_id']}'>{$row_doc['username']}</option>";
+                                    }
+                                }
+                            
+                            ?>
+                        </select>
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
                 </form>
             </div>
         </main>
@@ -187,7 +228,7 @@
             var aadharDigits = patientAadhar.substring(0, 5);
 
             // Concatenate the parts to form the patient ID
-            var patientId = initials.toUpperCase() + dob + "_"+ aadharDigits;
+            var patientId = initials.toUpperCase() + dob + "_" + aadharDigits;
 
             // Fill the patient id field
             document.getElementById('patientid').value = patientId;
