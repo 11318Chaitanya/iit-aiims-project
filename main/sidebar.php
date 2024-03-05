@@ -143,12 +143,17 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
+            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle nav-link link-dark"
+                id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
                 </svg>
                 Check availibility
             </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                <li><a class="dropdown-item" href="">Self Hospital</a></li>
+                <li><a class="dropdown-item" href="/project/healthcarepro/main/checkavailibility.php?for=otherHospital">Other Hospitals</a></li>
+            </ul>
         </li>
         <li>
             <a href="#" class="nav-link link-dark">
@@ -176,4 +181,3 @@
         </ul>
     </div>
 </div>
-
