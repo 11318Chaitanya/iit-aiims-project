@@ -28,18 +28,32 @@
         $patient_id = $_POST['patientid'];
         $patient_bp = $_POST['patientbp'];
         $patient_sugar = $_POST['patientsugar'];
+        $patient_category = $_POST['patientcategory'];
         $patient_severity = $_POST['patientseverity'];
         $patient_diagnostic_text = $_POST['patientdiagnostictext'];
         $patient_medication_text = $_POST['patientmedicationtext'];
         $patient_medical_history = $_POST['patientmedicalhistory'];
         $doctor_comment = $_POST['doctorcomment'];
+        $patient_status = $_POST['patientstatus'];
+        $alloted_bed_type = $_POST['allotedbedtype'];
+        $alloted_bed_num = $_POST['allotedbednum'];
         $doctor_id = $_POST['doctorid'];
 
+        $alloted_bed = $alloted_bed_type . "-" . $alloted_bed_num;
+
+        // patient profile picture
+
+        $pname_pic = rand(1000, 10000) . "-" . $_FILES["patientpicture"]["name"];
+        $tname_pic = $_FILES["patientpicture"]["tmp_name"];
+        $upload_dir_pic = "../../assests/patientfile";
+        move_uploaded_file($tname_pic, $upload_dir_pic . '/' . $pname_pic);
+
         // posting text data to database
-        $sql_pdt = "INSERT INTO `patientinfo` (`patient_name`, `patient_gender`, `patient_dob`, `patient_contact_num`, `patient_adhar_num`, `patient_bp`, `patient_sugar`, `patient_severity`, `patient_diagnostic_text`, `patient_medication_text`, `patient_medical_history`, `doctor_comment`,`patient_id`, `hospital_id`, `doctor_id`, `tstamp`) VALUES ('$patient_name', '$patient_gender', '$patient_dob', '$patient_contact_num', '$patient_adhar_num', '$patient_bp', '$patient_sugar', '$patient_severity', '$patient_diagnostic_text', '$patient_medication_text', '$patient_medical_history' ,'$doctor_comment','$patient_id', '$hospital_id', '$doctor_id', current_timestamp())";
+        $sql_pdt = "INSERT INTO `patientinfo` (`patient_profile_pic`, `patient_name`, `patient_gender`, `patient_dob`, `patient_contact_num`, `patient_adhar_num`, `patient_bp`, `patient_sugar`, `patient_category`,`patient_severity`, `patient_diagnostic_text`, `patient_medication_text`, `patient_medical_history`, `doctor_comment`,`patient_id`, `hospital_id`, `doctor_id`, `patient_status`, `alloted_bed`, `tstamp`) VALUES ('$pname_pic', '$patient_name', '$patient_gender', '$patient_dob', '$patient_contact_num', '$patient_adhar_num', '$patient_bp', '$patient_sugar', '$patient_category', '$patient_severity', '$patient_diagnostic_text', '$patient_medication_text', '$patient_medical_history' ,'$doctor_comment','$patient_id', '$hospital_id', '$doctor_id', '$patient_status', '$alloted_bed', current_timestamp())";
 
         $result_pdt = mysqli_query($conn, $sql_pdt);
         if($result_pdt){
+
             // patient images and videos
             foreach ($_FILES['patientimgvid']['name'] as $key => $value) {
                 $pname = rand(11111111, 99999999) . "-" . $value;

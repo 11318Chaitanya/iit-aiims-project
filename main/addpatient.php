@@ -51,6 +51,13 @@
                 <form action="/project/healthcarepro/partials/handelsubmission/__handelpatientdata.php" method="post"
                     enctype="multipart/form-data">
                     <h2>Personal details: </h2>
+                    <div class="mb-3 d-flex">
+                        <img src="../assests/userdefault.jpg" alt="" width="200px" height="200px">
+                        <div class="mb-3 d-flex flex-column justify-content-center">
+                            <label for="patientpicture" class="form-label">Upload Profile picture</label>
+                            <input type="file" class="form-control" id="patientpicture" name="patientpicture">
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="patientname" class="form-label">Patient Name</label>
                         <input type="text" class="form-control" id="patientname" name="patientname">
@@ -106,6 +113,16 @@
                         <label for="patientsugar" class="form-label">Sugar level</label>
                         <input type="number" class="form-control" id="patientsugar" name="patientsugar">
                     </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="patientcategory" class="form-label">Patient Category</label>
+                        <select class="form-select" aria-label="Default select example" name="patientcategory"
+                            id="patientcategory">
+                            <option value="burn_con">Burn Condition</option>
+                            <option value="physical_con">Physical Condition</option>
+                            <option value="lung_con">Lung Condition</option>
+                            <option value="heart_con">Heart Condition</option>
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="patientimgvid" class="form-label">Patient Images/videos</label>
                         <input type="file" class="form-control" id="patientimgvid" name="patientimgvid[]" multiple>
@@ -158,9 +175,71 @@
                         <textarea name="doctorcomment" id="doctorcomment" cols="30" rows="5"
                             class="form-control"></textarea>
                     </div>
+
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="patientstatus" class="form-label">Patient Status</label>
+                        <select class="form-select" aria-label="Default select example" name="patientstatus"
+                            id="patientstatus">
+                            <option value="cur">Current</option>
+                            <option value="dis">Discharged</option>
+                            <option value="mov">Moved</option>
+                            <option value="pas">Passed away</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="allotedbed me-3" class="form-label">Alloted Bed</label>
+                        <select class="form-select mx-2" aria-label="Default select example" name="allotedbedtype" id="allotedbedtype">
+                            <?php 
+
+                                $user_id = (int)$_SESSION['sno'];
+
+                                // getting hospital id according to user id 
+                                if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
+                                    $sql = "SELECT * FROM `hospitaldata` WHERE `doctor_id` = '$user_id'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    $hospital_id = $row['hospital_id'];
+                                } else{
+                                    $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    $hospital_id = $row['hospital_id'];
+                                }
+
+
+                                echo '<option value="any">Any</option>';
+                                $sql = "SELECT DISTINCT `bed_type` FROM `bedinfo` WHERE `bed_availibility`='AV' AND `hospital_id`='$hospital_id'";
+                                $result = mysqli_query($conn, $sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<option value='{$row['bed_type']}' selected>{$row['bed_type']}</option>";
+                                }
+                            ?>  
+                        </select>
+                        <select class="form-select" aria-label="Default select example" name="allotedbednum" id="allotedbednum">
+                            <option value="any">Any</option>
+                        </select>
+                    </div>
+
+                    <script>
+                        document.getElementById('allotedbedtype').addEventListener('change', function() {
+                            var bedType = this.value; // Get the selected bed type
+                            var xhr = new XMLHttpRequest(); // Create new XMLHttpRequest object
+                            xhr.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    // Update options of the second dropdown
+                                    document.getElementById('allotedbednum').innerHTML = this.responseText;
+                                }
+                            };
+                            // Send AJAX request to fetch available bed numbers based on bed type
+                            xhr.open("GET", "get_bed_numbers.php?bedType=" + bedType, true);
+                            xhr.send();
+                        });
+
+                    </script>
+
                     <div class="mb-3">
                         <label for="doctor_id" class="form-label">Admitted under</label>
-                        <select class="form-select" aria-label="Default select example" name="doctorid">
+                        <select class="form-select mx-2" aria-label="Default select example" name="doctorid">
                             <?php
                                 if(isset($_SESSION['sno']) && isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
                                     $sql = "SELECT * FROM `userinfo` WHERE `user_id`='" . $_SESSION['sno'] . "'";
@@ -192,9 +271,6 @@
                             ?>
                         </select>
                     </div>
-
-
-
                     <button type="submit" class="btn btn-primary mb-3">Submit</button>
                 </form>
             </div>
@@ -225,7 +301,7 @@
             var dob = convertDateToYYYYMMDD(patientDob);
 
             // Take the first five digits from the Aadhar number
-            var aadharDigits = patientAadhar.substring(0, 5);
+            var aadharDigits = patientAadhar.substring(8, 12);
 
             // Concatenate the parts to form the patient ID
             var patientId = initials.toUpperCase() + dob + "_" + aadharDigits;
