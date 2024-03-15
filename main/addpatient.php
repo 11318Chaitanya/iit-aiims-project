@@ -66,17 +66,17 @@
                         <label for="gender" class="form-label me-3">Gender</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientgender" id="gender_radio1"
-                                value="male">
+                                value="Male">
                             <label class="form-check-label" for="gender_radio1">Male</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientgender" id="gender_radio2"
-                                value="female">
+                                value="Female">
                             <label class="form-check-label" for="gender_radio2">Female</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientgender" id="gender_radio3"
-                                value="others">
+                                value="Others">
                             <label class="form-check-label" for="gender_radio3">Others</label>
                         </div>
                     </div>
@@ -117,10 +117,10 @@
                         <label for="patientcategory" class="form-label">Patient Category</label>
                         <select class="form-select" aria-label="Default select example" name="patientcategory"
                             id="patientcategory">
-                            <option value="burn_con">Burn Condition</option>
-                            <option value="physical_con">Physical Condition</option>
-                            <option value="lung_con">Lung Condition</option>
-                            <option value="heart_con">Heart Condition</option>
+                            <option value="Burn Condition">Burn Condition</option>
+                            <option value="Physical Condition">Physical Condition</option>
+                            <option value="Lung Condition">Lung Condition</option>
+                            <option value="Heart Condition">Heart Condition</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -131,17 +131,17 @@
                         <label for="patientseverity" class="form-label me-3">Severity index</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientseverity" id="patient_severity1"
-                                value="normal">
+                                value="Normal">
                             <label class="form-check-label text-success" for="patient_severity1">Normal</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientseverity" id="patient_severity2"
-                                value="mild">
+                                value="Mild">
                             <label class="form-check-label text-warning" for="patient_severity2">Mild</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="patientseverity" id="patient_severity3"
-                                value="high">
+                                value="High">
                             <label class="form-check-label text-danger" for="patient_severity3">High</label>
                         </div>
                     </div>
@@ -180,10 +180,10 @@
                         <label for="patientstatus" class="form-label">Patient Status</label>
                         <select class="form-select" aria-label="Default select example" name="patientstatus"
                             id="patientstatus">
-                            <option value="cur">Current</option>
-                            <option value="dis">Discharged</option>
-                            <option value="mov">Moved</option>
-                            <option value="pas">Passed away</option>
+                            <option value="Current">Current</option>
+                            <option value="Discharged">Discharged</option>
+                            <option value="Moved">Moved</option>
+                            <option value="Passed Away">Passed away</option>
                         </select>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
@@ -208,7 +208,7 @@
 
 
                                 echo '<option value="any">Any</option>';
-                                $sql = "SELECT DISTINCT `bed_type` FROM `bedinfo` WHERE `bed_availibility`='AV' AND `hospital_id`='$hospital_id'";
+                                $sql = "SELECT DISTINCT `bed_type` FROM `bedinfo` WHERE `bed_availibility`='Available' AND `hospital_id`='$hospital_id'";
                                 $result = mysqli_query($conn, $sql);
                                 while($row = mysqli_fetch_assoc($result)){
                                     echo "<option value='{$row['bed_type']}' selected>{$row['bed_type']}</option>";

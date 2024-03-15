@@ -38,7 +38,19 @@
                                     <input type="number" class="form-control" id="totalBedNumPerType">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" id="bedTypeName">
+                                    <!-- <input type="text" class="form-control" id="bedTypeName"> -->
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="General Ward">General Ward</option>
+                                        <option value="Private Ward">Private Ward</option>
+                                        <option value="Semi-Private Ward">Semi-Private Ward</option>
+                                        <option value="ICU">ICU</option>
+                                        <option value="CCU">CCU</option>
+                                        <option value="Maternity Ward">Maternity Ward</option>
+                                        <option value="Pediatric Ward">Pediatric Ward</option>
+                                        <option value="Psychiatric Ward">Psychiatric Ward</option>
+                                        <option value="Geriatric Ward">Geriatric Ward</option>
+                                        <option value="Isolation Ward">Isolation Ward</option>
+                                    </select>
                                 </td>
                             </tr>
                         </tbody>
@@ -86,8 +98,6 @@
     </div>
 
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
@@ -120,7 +130,7 @@
         dataTableContainer.style.display = 'block';
         let tbody = table.getElementsByTagName('tbody')[0];
         tbody.innerHTML = '';
-        let bedTypes = document.querySelectorAll('#bedGenTable tbody tr input[type="text"]');
+        let bedTypes = document.querySelectorAll('#bedGenTable tbody tr select');
         let allBedTypes = []; // Array to store all bed types
 
         // Gather all bed types
@@ -136,8 +146,8 @@
                 <td scope="row"><input type="number" class="form-control" name="bednum[]" value="${sno}"></td>
                 <td><select class="form-select" aria-label="Default select example" name="bedtype[]"></select></td>
                 <td><select class="form-select" aria-label="Default select example" name="bedavilibility[]">
-                        <option value="AV">Available</option>
-                        <option value="OC">Occupied</option>
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
                     </select></td>
                 <td><a href="#" class="btn btn-primary me-2">Edit</a><a href="#" class="btn btn-danger">Remove</a></td>
             `;
@@ -187,7 +197,18 @@
             <input type="number" class="form-control" id="totalBedNumPerType">
         </td>
         <td>
-            <input type="text" class="form-control" id="bedTypeName">
+            <select class="form-select" aria-label="Default select example">
+                <option value="General Ward">General Ward</option>
+                <option value="Private Ward">Private Ward</option>
+                <option value="Semi-Private Ward">Semi-Private Ward</option>
+                <option value="ICU">ICU</option>
+                <option value="CCU">CCU</option>
+                <option value="Maternity Ward">Maternity Ward</option>
+                <option value="Pediatric Ward">Pediatric Ward</option>
+                <option value="Psychiatric Ward">Psychiatric Ward</option>
+                <option value="Geriatric Ward">Geriatric Ward</option>
+                <option value="Isolation Ward">Isolation Ward</option>
+            </select>
         </td>
     `;
 

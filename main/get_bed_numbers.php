@@ -23,7 +23,7 @@ if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
 $bedType = $_GET['bedType'];
 
 // Query available bed numbers based on selected bed type
-$sql_no = "SELECT * FROM `bedinfo` WHERE `bed_type`='$bedType' AND `bed_availibility`='AV' AND `hospital_id`='$hospital_id'";
+$sql_no = "SELECT * FROM `bedinfo` WHERE `bed_type`='$bedType' AND `bed_availibility`='Available' AND `hospital_id`='$hospital_id'";
 $result_no = mysqli_query($conn, $sql_no);
 $options = "<option value='any'>Any</option>"; // Initialize options variable with default option
 while($row_no = mysqli_fetch_assoc($result_no)){
