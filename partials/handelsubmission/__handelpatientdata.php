@@ -55,36 +55,42 @@
         if($result_pdt){
 
             // patient images and videos
+            $pname = [];
             foreach ($_FILES['patientimgvid']['name'] as $key => $value) {
                 $pname = rand(11111111, 99999999) . "-" . $value;
                 $tname = $_FILES['patientimgvid']['tmp_name'][$key];
                 $upload_dir = "../../assests/patientfile";
+                $pnames[] = $pname;
                 move_uploaded_file($tname, $upload_dir . '/' . $pname);
             }
             
-            $patient_img_vid = serialize($_FILES['patientimgvid']['name']);
+            // $patient_img_vid = serialize($_FILES['patientimgvid']['name']);
+            $patient_img_vid = serialize($pnames);
             
             // patient diagnostic files
+            $pnames = [];
             foreach ($_FILES['patientdiagnosticfile']['name'] as $key => $value) {
-
                 $pname = rand(11111111, 99999999) . "-" . $value;
                 $tname = $_FILES['patientdiagnosticfile']['tmp_name'][$key];
                 $upload_dir = "../../assests/patientfile";
+                $pnames[] = $pname;
                 move_uploaded_file($tname, $upload_dir . '/' . $pname);
             }
             
-            $patient_diagnostic_file = serialize($_FILES['patientdiagnosticfile']['name']);
+            // $patient_diagnostic_file = serialize($_FILES['patientdiagnosticfile']['name']);
+            $patient_diagnostic_file = serialize($pnames);
             
             // patient medication files
+            $pnames = [];
             foreach ($_FILES['patientmedicationfile']['name'] as $key => $value) {
-
                 $pname = rand(11111111, 99999999) . "-" . $value;
                 $tname = $_FILES['patientmedicationfile']['tmp_name'][$key];
                 $upload_dir = "../../assests/patientfile";
+                $pnames[] = $pname;
                 move_uploaded_file($tname, $upload_dir . '/' . $pname);
             }
             
-            $patient_medication_file = serialize($_FILES['patientmedicationfile']['name']);
+            $patient_medication_file = serialize($pnames);
 
             $sql_pfd = "INSERT INTO `patientfile` (`patient_img_vid`, `patient_diagnostic_file`, `patient_medication_file`, `patient_id`, `tstamp`) VALUES ('$patient_img_vid', '$patient_diagnostic_file', '$patient_medication_file', '$patient_id', current_timestamp())";
 

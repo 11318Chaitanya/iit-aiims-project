@@ -109,7 +109,7 @@ session_start();
                         echo  ' <tr>
                             <td>'.$bedNum.'</td>
                             <td>'.$bedType.'</td>
-                            <td><a href="">'.$row['patient_id'].'</a></td>
+                            <td><a href="getpatientdetails.php?patientId='.$row['patient_id'].'">'.$row['patient_id'].'</a></td>
                             <td>'.$row['patient_name'].'</td>
                             <td>'.$row['patient_severity'].'</td>
                             <td>'.$row['patient_category'].'</td>
@@ -163,7 +163,7 @@ session_start();
                         echo  ' <tr>
                             <td>'.$bedNum.'</td>
                             <td>'.$bedType.'</td>
-                            <td><a href="">'.$row['patient_id'].'</a></td>
+                            <td><a href="getpatientdetails.php?patientId='.$row['patient_id'].'">'.$row['patient_id'].'</a></td>
                             <td>'.$row['patient_name'].'</td>
                             <td>'.$row['patient_severity'].'</td>
                             <td>'.$row['patient_category'].'</td>

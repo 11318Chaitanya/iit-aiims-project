@@ -45,7 +45,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
             }
-            
             ?>
                 <h1>Add Patient</h1>
                 <form action="/project/healthcarepro/partials/handelsubmission/__handelpatientdata.php" method="post"
@@ -234,7 +233,6 @@
                             xhr.open("GET", "get_bed_numbers.php?bedType=" + bedType, true);
                             xhr.send();
                         });
-
                     </script>
 
                     <div class="mb-3">
