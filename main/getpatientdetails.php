@@ -26,12 +26,9 @@ session_start();
         text-decoration: none;
     }
 
-    /* input{
-        width:auto !important;
+    #imageUploadContainer {
+        display: none;
     }
-    label{
-        margin-right:8px;
-    } */
     </style>
 
 </head>
@@ -59,50 +56,58 @@ session_start();
                     <div class="card col-6">
                         <div class="card-body">
                             <h5 class="card-title">Personal Details</h5>
-                            <div class="row align-items-between personalDetails">
-                                <div class="mb-3 col-5">
-                                    <img src="'.$row['patient_profile_pic'].'" alt="" width="200px" height="200px">
-                                    <!-- <div class="mb-3 d-flex flex-column justify-content-center">
-                                        <label for="patientpicture" class="form-label">Upload Profile picture</label>
-                                        <input type="file" class="form-control" id="patientpicture" name="patientpicture">
-                                    </div> -->
+                            <form action="/project/healthcarepro/partials/handelpatientdatachange/handelpatientinfochange.php" method="post" enctype="multipart/form-data">
+                                <div class="row align-items-between personalDetails">
+                                    <div class="mb-3 col-5">
+                                        <img src="../assests/patientfile/'.$row['patient_profile_pic'].'" alt="" width="200px" height="200px">
+                                        <div class="mb-3 flex-column justify-content-center" id="imageUploadContainer">
+                                            <label for="patientpicture" class="form-label">Upload Profile picture</label>
+                                            <input type="file" class="form-control" id="patientpicture" name="patientpicture">
+                                        </div> 
+                                    </div>
+                                    <div class="col-7 align-items-center">
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="patientid" class="form-label me-2">Patient Id:</label>
+                                            <input type="text" class="form-control" id="patientid" name="patientid"
+                                                style="width:auto;" value="'.$row['patient_id'].'" readonly disabled>
+                                                <button type="button" class="btn btn-primary" id="generatePatientIdButton" style="display:none;"
+                                    onclick="generatePatientId()">Generate</button>
+                                        </div>
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="patientname" class="form-label me-2">Name:</label>
+                                            <input type="text" class="form-control" id="patientname" name="patientname"
+                                                style="width:auto;" value="'.$row['patient_name'].'" disabled>
+                                        </div>
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="gender" class="form-label me-2">Gender:</label>
+                                            <select class="form-select" aria-label="Default select example"
+                                                    name="patientgender" id="patientgender" style="width:auto;"
+                                                    disabled>
+                                                    <option value="Male" ' . ($row['patient_gender'] === 'Male' ? 'selected' : '') . '>Male</option>
+                                                    <option value="Female" ' . ($row['patient_gender'] === 'Female' ? 'selected' : '') . '>Female</option>
+                                                    <option value="Others" ' . ($row['patient_gender'] === 'Others' ? 'selected' : '') . '>Others</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="patientdob" class="form-label me-2">Date of Birth:</label>
+                                            <input type="date" class="form-control" id="patientdob" name="patientdob"
+                                                style="width:auto;" value="'.$row['patient_dob'].'" disabled>
+                                        </div>
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="patientcontactnum" class="form-label me-2">Contact Number:</label>
+                                            <input type="tel" class="form-control" id="patientcontactnum"
+                                                style="width:auto;" name="patientcontactnum" value="'.$row['patient_contact_num'].'" disabled>
+                                        </div>
+                                        <div class="mb-2 d-flex align-items-center">
+                                            <label for="patientadharnum" class="form-label me-2">Adhar Card Number:</label>
+                                            <input type="text" class="form-control" id="patientadharnum"
+                                                style="width:auto;" name="patientadharnum" value="'.$row['patient_adhar_num'].'" disabled>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="personalEdit" class="btn btn-primary">Edit</button>
+                                    <button type="submit" id="personalSubmit" class="btn btn-primary" style="display:none">Submit</button>
                                 </div>
-                                <div class="col-7 align-items-center">
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="patientid" class="form-label me-2">Patient Id:</label>
-                                        <input type="text" class="form-control" id="patientid" name="patientid"
-                                            style="width:auto;" value="'.$row['patient_id'].'" disabled>
-                                    </div>
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="patientname" class="form-label me-2">Name:</label>
-                                        <input type="text" class="form-control" id="patientname" name="patientname"
-                                            style="width:auto;" value="'.$row['patient_name'].'" disabled>
-                                    </div>
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="gender" class="form-label me-2">Gender:</label>
-                                        <select class="form-select" aria-label="Default select example"
-                                            name="patientgender" id="patientgender" style="width:auto;"
-                                            disabled>
-                                            <option value="'.$row['patient_gender'].'">'.$row['patient_gender'].'</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="patientdob" class="form-label me-2">Date of Birth:</label>
-                                        <input type="date" class="form-control" id="patientdob" name="patientdob"
-                                            style="width:auto;" value="'.$row['patient_dob'].'" disabled>
-                                    </div>
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="patientcontactnum" class="form-label me-2">Contact Number:</label>
-                                        <input type="tel" class="form-control" id="patientcontactnum"
-                                            style="width:auto;" name="patientcontactnum" value="'.$row['patient_contact_num'].'" disabled>
-                                    </div>
-                                    <div class="mb-2 d-flex align-items-center">
-                                        <label for="patientadharnum" class="form-label me-2">Adhar Card Number:</label>
-                                        <input type="text" class="form-control" id="patientadharnum"
-                                            style="width:auto;" name="patientadharnum" value="'.$row['patient_adhar_num'].'" disabled>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-5">
@@ -169,10 +174,10 @@ session_start();
                         -->
                         
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="modalFooter">
                             <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Add File</button>
+                            <button type="button" class="btn btn-primary addFile">Add File</button>
                         </div>
                     </div>
                 </div>
@@ -201,35 +206,42 @@ session_start();
                                 $result_p = mysqli_query($conn, $sql_p);
                                 $row_p = mysqli_fetch_assoc($result_p);
                                 
-                                viewFiles('Patient Images & Videos:', $row_p['patient_img_vid'], 'patient_img_vid');
-                                viewFiles('Diagnostic Files:', $row_p['patient_diagnostic_file'], 'patient_diagnostic_file');
-                                viewFiles('Medication Files:', $row_p['patient_medication_file'], 'patient_medication_file');
+                                viewFiles('Patient Images & Videos:',$row_p['patient_img_vid'] ?? '', 'patient_img_vid');
+                                viewFiles('Diagnostic Files:', $row_p['patient_diagnostic_file'] ?? '', 'patient_diagnostic_file');
+                                viewFiles('Medication Files:', $row_p['patient_medication_file'] ?? '', 'patient_medication_file');
                             echo '</div>
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="card">
                         <div class="card-body">
-                        <h5 class="card-title">Medical Details</h5>';
-                        function medicalDetailTextarea($label, $value) {
+                        <h5 class="card-title">Medical Details</h5>
+                        <form action="/project/healthcarepro/partials/handelpatientdatachange/handelpatientinfochange.php" method="post">
+                        ';
+                        
+                        function medicalDetailTextarea($label, $value, $name) {
                             echo '
                             <div class="mb-3 d-flex align-items-center form-floating mb-3">
                                 <textarea class="form-control" placeholder="Leave a comment here"
-                                    id="floatingTextarea2Disabled" style="height: 100px"
+                                    id="'.$name.'" name="'.$name.'" style="height: 100px"
                                     disabled>' . $value . '</textarea>
                                 <label for="floatingTextarea2Disabled">' . $label . '</label>
                             </div>';
                         }
-                        medicalDetailTextarea('Diagnostic Details', $row['patient_diagnostic_text']); 
-                        medicalDetailTextarea('Medications Given', $row['patient_medication_text']); 
-                        medicalDetailTextarea('Medical history', $row['patient_medical_history']); 
-                        medicalDetailTextarea("Doctor's comment", $row['doctor_comment']); 
-                    echo '</div>
+                        medicalDetailTextarea('Diagnostic Details', $row['patient_diagnostic_text'], 'patientdiagnostictext'); 
+                        medicalDetailTextarea('Medications Given', $row['patient_medication_text'], 'patientmedicationtext'); 
+                        medicalDetailTextarea('Medical history', $row['patient_medical_history'], 'patientmedicalhistory'); 
+                        medicalDetailTextarea("Doctor's comment", $row['doctor_comment'], 'doctorcomment'); 
+                        echo '
+                        <input value="'.$patientId.'" name="patientid" hidden>
+                        <button type="button" class="btn btn-primary" id="medicalEdit">Edit</button>
+                        <button type="submit" class="btn btn-primary" id="medicalSubmit" style="display:none">Submit</button>
+                        </form>
+                        </div>
                         </div>
                     </div>
                 </div>
             </section>
-
         </main>';
 
         }
@@ -243,6 +255,89 @@ session_start();
     </script>
 
     <script>
+    function generatePatientId() {
+        // Get the values of patient name, date of birth, and Aadhar number
+        var patientName = document.getElementById('patientname').value;
+        var patientDob = document.getElementById('patientdob').value;
+        var patientAadhar = document.getElementById('patientadharnum').value;
+
+        // Check if all fields are filled
+        if (patientName && patientDob && patientAadhar) {
+            // Extract initials from name
+            var initials = getInitials(patientName);
+
+            // Extract last two digits of the year from date of birth
+            // var dobYear = patientDob.substring(patientDob.length - 4);
+
+            var dob = convertDateToYYYYMMDD(patientDob);
+
+            // Take the first five digits from the Aadhar number
+            var aadharDigits = patientAadhar.substring(8, 12);
+
+            // Concatenate the parts to form the patient ID
+            var patientId = initials.toUpperCase() + dob + "_" + aadharDigits;
+
+            // Fill the patient id field
+            document.getElementById('patientid').value = patientId;
+            console.log(patientId);
+        } else {
+            alert('Please fill in all the reqired fields.');
+        }
+    }
+
+    // Function to extract initials from name
+    function getInitials(name) {
+        var parts = name.split(' ');
+        var initials = '';
+        for (var i = 0; i < parts.length; i++) {
+            initials += parts[i].charAt(0);
+        }
+        return initials;
+    }
+    // Function to generate dob
+    function convertDateToYYYYMMDD(dateString) {
+        // Split the input string into year, month, and day components
+        var parts = dateString.split('-');
+
+        // Concatenate the components to form the YYYYMMDD format
+        var formattedDate = parts[0] + parts[1] + parts[2];
+
+        return formattedDate;
+    }
+    </script>
+
+
+    <script>
+    // handeling personal info
+    const editButton = document.getElementById('personalEdit');
+    editButton.addEventListener('click', () => {
+        document.getElementById('personalSubmit').style.display = 'block';
+        document.getElementById('imageUploadContainer').style.display = 'flex';
+        document.getElementById('generatePatientIdButton').style.display = "inline-flex";
+        editButton.style.display = 'none';
+
+        const fields = document.querySelectorAll(
+            '#patientid ,#patientname, #patientgender, #patientdob, #patientcontactnum, #patientadharnum, #patientgender'
+        );
+        // Enable all input fields
+        fields.forEach(field => {
+            field.removeAttribute('disabled');
+        });
+
+    });
+
+    // handeling medical info
+    document.getElementById('medicalEdit').addEventListener('click', () => {
+        // Get all textarea elements
+        const textareas = document.querySelectorAll('.card-body textarea');
+        document.getElementById('medicalSubmit').style.display = "block";
+        document.getElementById('medicalEdit').style.display = "none";
+        // Enable all textarea elements
+        textareas.forEach(textarea => {
+            textarea.removeAttribute('disabled');
+        });
+    });
+
     /* global bootstrap: false */
     (() => {
         'use strict'
@@ -251,6 +346,9 @@ session_start();
             new bootstrap.Tooltip(tooltipTriggerEl)
         })
     })()
+
+
+    // handeling file data 
 
     const filesModalButtons = document.querySelectorAll('.filesModalButton');
     filesModalButtons.forEach(button => {
@@ -268,6 +366,10 @@ session_start();
                 const hr = document.createElement('hr');
                 const p = document.createElement('p');
                 const a = document.createElement('a');
+                const div = document.createElement('div');
+
+                div.classList.add('fileContainerMain');
+
                 p.innerHTML =
                     `<b>${file}</b><button class="btn btn-primary removeFiles">Remove</button>`;
                 iframe.style.width = "80%";
@@ -275,32 +377,80 @@ session_start();
                 p.classList.add("d-inline-flex");
                 console.log(file);
                 iframe.src = '../assests/patientfile/' + file;
-                document.getElementById('filesContainer').appendChild(p);
-                document.getElementById('filesContainer').appendChild(a);
-                document.getElementById('filesContainer').appendChild(iframe);
-                document.getElementById('filesContainer').appendChild(hr);
+                div.appendChild(p);
+                div.appendChild(a);
+                div.appendChild(iframe);
+                div.appendChild(hr);
+                document.getElementById('filesContainer').appendChild(div);
+
+
+                // Get the current URL
+                const currentUrl = window.location.href;
+
+                // Extract the query string part of the URL
+                const queryString = currentUrl.split('?')[1];
+
+                // Split the query string into individual key-value pairs
+                const queryParams = queryString.split('&');
+
+                // Loop through the key-value pairs to find the patientId parameter
+                let patientId = null;
+                for (const param of queryParams) {
+                    const [key, value] = param.split('=');
+                    if (key === 'patientId') {
+                        patientId = value;
+                        break;
+                    }
+                }
+
+                console.log(patientId);
+
+                function sendRequest(filePath) {
+                    var xhr = new XMLHttpRequest(); // Create new XMLHttpRequest object
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // Update options of the second dropdown
+                            console.log(this.responseText);
+                        }
+                    };
+                    // Send AJAX request to fetch available bed numbers based on bed type
+                    xhr.open("GET",
+                        filePath, true);
+                    xhr.send();
+                }
+
+                // document.querySelector('.addFile').addEventListener('click', () => {
+
+                //     sendRequest(
+                //         "../partials/handelpatientdatachange/deletefile.php?patientId=" +
+                //         patientId +
+                //         "&fileCategory=" + fileCategory);
+                // })
 
 
                 // Adding click event listener to the removeFiles button
-                // p.querySelector('.removeFiles').addEventListener('click', () => {
-                //     // console.log('Remove clicked for', file);
-                //     var xhr = new XMLHttpRequest(); // Create new XMLHttpRequest object
-                //             xhr.onreadystatechange = function() {
-                //                 if (this.readyState == 4 && this.status == 200) {
-                //                     // Update options of the second dropdown
-                //                     console.log("done");
-                //                 }
-                //             };
-                //             // Send AJAX request to fetch available bed numbers based on bed type
-                //             xhr.open("GET", "deletefile.php?fileName=" + file + "&fileCategory=" + fileCategory, true);
-                //             xhr.send();
-                    
-                // });
+                p.querySelector('.removeFiles').addEventListener('click', () => {
+                    // console.log('Remove clicked for', file);
+
+                    sendRequest(
+                        "../partials/handelpatientdatachange/deletefile.php?patientId=" +
+                        patientId +
+                        "&fileName=" + file +
+                        "&fileCategory=" + fileCategory);
+
+                    const divContainer = p.closest('.fileContainerMain');
+
+                    // Remove the parent div container
+                    divContainer.remove();
+                });
+
+
             })
         });
     });
     </script>
-    
+
+
 
 </body>
 
