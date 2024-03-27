@@ -104,9 +104,6 @@
         <path
             d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8m0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5" />
     </symbol>
-
-
-
 </svg>
 
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:100vh;">
@@ -142,8 +139,31 @@
                 Add patient
             </a>
         </li>
+        <?php
+        if(isset($_SESSION['usertype']) && ($_SESSION['usertype'] === 'HOA' || $_SESSION['usertype'] === 'ADM')){
+            echo '<li>
+                    <a href="/project/healthcarepro/main/adddoctor.php" class="nav-link link-dark">
+                        <svg class="bi bi-person-fill-add me-2" width="16" height="16">
+                            <use xlink:href="#person-fill-add"></use>
+                        </svg>
+                        Add Doctor
+                    </a>
+                </li>';
+        }
+        if(isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'ADM'){
+            echo '<li>
+                    <a href="/project/healthcarepro/main/addhospitaladmin.php" class="nav-link link-dark">
+                        <svg class="bi bi-person-fill-add me-2" width="16" height="16">
+                            <use xlink:href="#person-fill-add"></use>
+                        </svg>
+                        Add Hospital Admin
+                    </a>
+                </li>';
+        }
+        ?>
         <li>
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle nav-link link-dark"
+            <a href="#"
+                class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle nav-link link-dark"
                 id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
@@ -151,8 +171,10 @@
                 Check availibility
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                <li><a class="dropdown-item" href="">Self Hospital</a></li>
-                <li><a class="dropdown-item" href="/project/healthcarepro/main/checkavailibility.php?for=otherHospital">Other Hospitals</a></li>
+                <li><a class="dropdown-item" href="/project/healthcarepro/main/checkavailibility/selfHospital.php">Self
+                        Hospital</a></li>
+                <li><a class="dropdown-item"
+                        href="/project/healthcarepro/main/checkavailibility/otherHospitals.php">Other Hospitals</a></li>
             </ul>
         </li>
         <li>
