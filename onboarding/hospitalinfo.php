@@ -1,3 +1,4 @@
+<?php include '../partials/__sessionconnect.php'?>
 <!doctype html>
 <html lang="en">
 

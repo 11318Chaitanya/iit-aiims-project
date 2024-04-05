@@ -1,6 +1,4 @@
-<?php
-    session_start(); 
-?>
+<?php include '../partials/__sessionconnect.php'?>
 <!doctype html>
 <html lang="en">
 
@@ -205,22 +203,33 @@
                                     $hospital_id = $row['hospital_id'];
                                 }
 
-
-                                echo '<option value="any">Any</option>';
-                                $sql = "SELECT DISTINCT `bed_type` FROM `bedinfo` WHERE `bed_availibility`='Available' AND `hospital_id`='$hospital_id'";
+                                if(isset($_GET['bedType']) && $_GET['bedType'] !==''){
+                                    echo '<option value="'.$_GET['bedType'].'" selected>'.$_GET['bedType'].'</option>';
+                                }else{
+                                    echo '<option value="any" Selected>Any</option>';
+                                }
+                                $sql = "SELECT DISTINCT `bed_type` FROM `bedinfo` WHERE `bed_availibility`='Available' AND `hospital_id`='$hospital_id' AND `bed_type` <> '" . $_GET['bedType'] . "'";
                                 $result = mysqli_query($conn, $sql);
                                 while($row = mysqli_fetch_assoc($result)){
-                                    echo "<option value='{$row['bed_type']}' selected>{$row['bed_type']}</option>";
+                                    echo "<option value='{$row['bed_type']}'>{$row['bed_type']}</option>";
                                 }
                             ?>  
                         </select>
                         <select class="form-select" aria-label="Default select example" name="allotedbednum" id="allotedbednum">
-                            <option value="any">Any</option>
+                            <?php
+                                if(isset($_GET['bedNum']) && $_GET['bedNum'] !==''){
+                                    echo '<option value="'.$_GET['bedNum'].'" selected>'.$_GET['bedNum'].'</option>';
+                                }else{
+                                    echo '<option value="Any" selected>Any</option>';
+                                }
+                            ?>
                         </select>
                     </div>
 
                     <script>
                         document.getElementById('allotedbedtype').addEventListener('change', function() {
+                            var bedNum = document.getElementById('allotedbednum').value;
+                            console.log(bedNum);
                             var bedType = this.value; // Get the selected bed type
                             var xhr = new XMLHttpRequest(); // Create new XMLHttpRequest object
                             xhr.onreadystatechange = function() {
@@ -230,9 +239,10 @@
                                 }
                             };
                             // Send AJAX request to fetch available bed numbers based on bed type
-                            xhr.open("GET", "get_bed_numbers.php?bedType=" + bedType, true);
+                            xhr.open("GET", "get_bed_numbers.php?bedType=" + bedType + "&bedNum="+ bedNum, true);
                             xhr.send();
                         });
+                        document.getElementById('allotedbedtype').dispatchEvent(new Event('change'));
                     </script>
 
                     <div class="mb-3">

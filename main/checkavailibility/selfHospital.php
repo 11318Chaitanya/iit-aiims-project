@@ -1,6 +1,5 @@
-<?php
-    session_start();
-?>
+<?php include '../../partials/__sessionconnect.php'?>
+
 <!doctype html>
 <html lang="en">
 
@@ -29,7 +28,7 @@
 
         <main class="d-flex flex-column mx-2" style="width:100%">
             <div class="container my-2">
-            <?php 
+                <?php 
                 $user_id = (int)$_SESSION['sno'];
                 
                 if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'HOA'){
@@ -61,17 +60,19 @@
                 $result = mysqli_query($conn, $sql);
 
                 while ($row = mysqli_fetch_array($result)){
-                    echo  ' <tr>
+                    echo '<tr>
                             <td>'.$row['bed_num'].'</td>
                             <td>'.$row['bed_type'].'</td>
                             <td>'.$row['bed_availibility'].'</td>
-                            <td><a href="#" class="btn btn-primary me-2">Add patient</a></td>
+                            <td><a href="/project/healthcarepro/main/addpatient.php?bedNum='.$row['bed_num'].'&bedType='.$row['bed_type'].'" class="btn btn-primary me-2';
+                        echo $row['bed_availibility'] === 'Available' ? '' : ' disabled'; // Adding the 'disabled' class conditionally
+                        echo '">Add patient</a></td>
                         </tr>';
                 }
                 echo '</tbody>
                     </table>';
             ?>
-                
+
             </div>
         </main>
 

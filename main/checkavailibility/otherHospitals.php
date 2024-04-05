@@ -1,6 +1,4 @@
-<?php
-    session_start();
-?>
+<?php include '../../partials/__sessionconnect.php'?>
 
 <!doctype html>
 <html lang="en">
@@ -28,6 +26,23 @@
         <?php include '../sidebar.php';?>
         <?php include '../../partials/__dbconnect.php'?>
 
+        <?php
+            $user_id = (int)$_SESSION['sno'];
+
+            // getting hospital id according to user id 
+            if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
+                $sql = "SELECT * FROM `hospitaldata` WHERE `doctor_id` = '$user_id'";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $hospital_id_g = $row['hospital_id'];
+            } else{
+                $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $hospital_id_g = $row['hospital_id'];
+            }
+        ?>
+
         <main class="d-flex flex-column mx-2" style="width:100%">
             <div class="container my-2">
             <?php 
@@ -42,7 +57,9 @@
                             </form>
                         </div>
                     <div class="row">';
-                $sql_s = "SELECT * FROM `hospitalinfo` WHERE MATCH (hospital_name, hospital_id) against ('" . $_GET['search'] . "')";
+
+
+                $sql_s = "SELECT * FROM `hospitalinfo` WHERE MATCH (hospital_name, hospital_id) against ('" . $_GET['search'] . "') AND `hospital_id` != '$hospital_id_g'";
                 $result_s = mysqli_query($conn, $sql_s);
                 $noresult = true;
                 while($row_s = mysqli_fetch_assoc($result_s)){
@@ -93,7 +110,9 @@
                             <td>'.$row['bed_num'].'</td>
                             <td>'.$row['bed_type'].'</td>
                             <td>'.$row['bed_availibility'].'</td>
-                            <td><a href="#" class="btn btn-primary me-2">Request</a></td>
+                            <td><a href="#" class="btn btn-primary me-2';
+                        echo $row['bed_availibility'] === 'Available' ? '' : ' disabled'; // Adding the 'disabled' class conditionally
+                        echo '">Add patient</a></td>
                         </tr>';
                 }
                 echo '</tbody>
@@ -112,7 +131,9 @@
                     </div>
 
                     <div class="row">';
-                $sql = "SELECT * FROM `hospitalinfo`";
+                    
+
+                $sql = "SELECT * FROM `hospitalinfo` WHERE `hospital_id` <> '$hospital_id_g'";
                     $result = mysqli_query($conn, $sql);
 
                     while($row = mysqli_fetch_assoc($result)){
