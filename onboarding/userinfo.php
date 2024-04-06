@@ -26,7 +26,6 @@
                 </div>
             </div>
             <?php 
-                session_start();
                 if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
                     $usertype = NULL;
                     if($_SESSION['usertype'] === "HOA"){

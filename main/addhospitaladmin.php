@@ -22,48 +22,19 @@
                 <?php
                 if(isset($_GET['subSuccess']) && $_GET['subSuccess']=="true"){
                     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-                  <strong>Successful!</strong> Doctor added successfully
+                  <strong>Successful!</strong> Hospital Admin added successfully
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>';
                 }
                 else if(isset($_GET['subSuccess']) && $_GET['subSuccess']=="false"){
                     echo '<div class="alert alert-danger alert-dismissible fade show my-0" role="alert">
                   <strong>Error! </strong>' .$_GET['error']. '
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  <button type="button" class="btn-close d-none" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>';
                 }
                 ?>
-            <h1 class="my-3">Add doctor</h1>
-                <form  id="addDoctorForm" action="/project/healthcarepro/partials/handelnewlogusers/__handeladd.php?add=HOA" method="post">
-                    <div class="mb-3">
-                        <label for="hospital_id" class="form-label">Hospital</label>    
-                        <select class="form-select" aria-label="Default select example" name="hospital_id">
-                            <?php
-                                $user_id = (int)$_SESSION['sno'];
-                    
-                                $hospitalId = null;
-                                if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'HOA'){
-                                    $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
-                                    $result = mysqli_query($conn, $sql);
-                                    $row = mysqli_fetch_assoc($result);
-                                    $hospitalId = $row['hospital_id'];
-                                }
-
-                                if($hospitalId){
-                                    $sql = "SELECT * FROM `hospitalinfo` WHERE `hospital_id` = '$hospitalId'";
-                                    $result = mysqli_query($conn, $sql);
-                                    $row = mysqli_fetch_assoc($result);
-                                        echo '<option value="'.$hospitalId.'">'.$row['hospital_name'].'</option>';
-                                }else{
-                                    $sql = "SELECT * FROM `hospitalinfo`";
-                                    $result = mysqli_query($conn, $sql);
-                                    while($row = mysqli_fetch_array($result)){
-                                        echo '<option value="'.$row['hospital_id'].'">'.$row['hospital_id'].'</option>';
-                                    }
-                                }
-                            ?>  
-                        </select>
-                    </div>
+            <h1 class="my-3">Add Hospital Admin</h1>
+                <form  id="addHospitalAdminForm" action="/project/healthcarepro/partials/handelnewlogusers/__handeladd.php?add=HOA" method="post">
                     <div class="mb-3">
                         <label for="useremail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="useremail" name="useremail"
@@ -76,7 +47,7 @@
                             <button type="button" onclick="generatePassword()" class="btn btn-primary">Generate Password</button>
                         </div>
                     </div>
-                    <button type="button" onclick="submitForm()" class="btn btn-primary">Submit</button>
+                    <button type="submit" onclick="submitForm()" class="btn btn-primary">Submit</button>
                 </form>
 
             </div>
@@ -118,45 +89,59 @@
             document.getElementById("password").value = password;
         }
 // Submit form using AJAX
-function submitForm() {
-            const form = document.getElementById("addDoctorForm");
-            const formData = new FormData(form);
+// function submitForm() {
+//             const form = document.getElementById("addHospitalAdminForm");
+//             const formData = new FormData(form);
 
-            fetch(form.action, {
-                method: form.method,
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Display doctor information in modal
-                const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
-                const email = document.getElementById("useremail").value;
-                const password = document.getElementById("password").value;
+//             fetch(form.action, {
+//                 method: form.method,
+//                 body: formData
+//             })
+//             .then(response => response.text())
+//             .then(data => {
+//                 // Display doctor information in modal
+//                 const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
+//                 const email = document.getElementById("useremail").value;
+//                 const password = document.getElementById("password").value;
 
-                document.getElementById("modalHospital").innerText = "Hospital: " + hospital;
-                document.getElementById("modalEmail").innerText = "Email: " + email;
-                document.getElementById("modalPassword").innerText = "Password: " + password;
+//                 document.getElementById("modalHospital").innerText = "Hospital: " + hospital;
+//                 document.getElementById("modalEmail").innerText = "Email: " + email;
+//                 document.getElementById("modalPassword").innerText = "Password: " + password;
 
-                // Show modal
-                var doctorModal = new bootstrap.Modal(document.getElementById('doctorModal'));
-                doctorModal.show();
-            })
-            .catch(error => console.error('Error:', error));
-        }
+//                 // Show modal
+//                 var doctorModal = new bootstrap.Modal(document.getElementById('doctorModal'));
+//                 doctorModal.show();
+//             })
+//             .catch(error => console.error('Error:', error));
+//         }
 
-        // Share captured data
-        function shareDoctorInfo() {
-            const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
-            const email = document.getElementById("useremail").value;
-            const password = document.getElementById("password").value;
+//         // Share captured data
+//         function shareDoctorInfo() {
+//             const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
+//             const email = document.getElementById("useremail").value;
+//             const password = document.getElementById("password").value;
 
-            // Here you can implement your share functionality, like copying to clipboard or sending via email
-            // For demonstration, let's just log the data to console
-            console.log("Hospital: " + hospital);
-            console.log("Email: " + email);
-            console.log("Password: " + password);
-        }
+//             // Here you can implement your share functionality, like copying to clipboard or sending via email
+//             // For demonstration, let's just log the data to console
+//             console.log("Hospital: " + hospital);
+//             console.log("Email: " + email);
+//             console.log("Password: " + password);
+//         }
 
+    </script>
+
+
+    <script>
+        // Select the close button
+        var closeButton = document.querySelector('.btn-close');
+
+        // Set a timeout to trigger click event on the close button after 2 seconds
+        setTimeout(function() {
+            // Check if the close button exists before triggering click event
+            if (closeButton) {
+                closeButton.click(); // Simulate a click event on the close button
+            }
+        }, 1500);
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

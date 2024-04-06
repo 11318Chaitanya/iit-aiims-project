@@ -76,7 +76,7 @@
                             <button type="button" onclick="generatePassword()" class="btn btn-primary">Generate Password</button>
                         </div>
                     </div>
-                    <button type="button" onclick="submitForm()" class="btn btn-primary">Submit</button>
+                    <button type="submit" onclick="submitForm()" class="btn btn-primary">Submit</button>
                 </form>
 
             </div>
@@ -118,44 +118,44 @@
             document.getElementById("password").value = password;
         }
 // Submit form using AJAX
-function submitForm() {
-            const form = document.getElementById("addDoctorForm");
-            const formData = new FormData(form);
+// function submitForm() {
+//             const form = document.getElementById("addDoctorForm");
+//             const formData = new FormData(form);
 
-            fetch(form.action, {
-                method: form.method,
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Display doctor information in modal
-                const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
-                const email = document.getElementById("useremail").value;
-                const password = document.getElementById("password").value;
+//             fetch(form.action, {
+//                 method: form.method,
+//                 body: formData
+//             })
+//             .then(response => response.text())
+//             .then(data => {
+//                 // Display doctor information in modal
+//                 const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
+//                 const email = document.getElementById("useremail").value;
+//                 const password = document.getElementById("password").value;
 
-                document.getElementById("modalHospital").innerText = "Hospital: " + hospital;
-                document.getElementById("modalEmail").innerText = "Email: " + email;
-                document.getElementById("modalPassword").innerText = "Password: " + password;
+//                 document.getElementById("modalHospital").innerText = "Hospital: " + hospital;
+//                 document.getElementById("modalEmail").innerText = "Email: " + email;
+//                 document.getElementById("modalPassword").innerText = "Password: " + password;
 
-                // Show modal
-                var doctorModal = new bootstrap.Modal(document.getElementById('doctorModal'));
-                doctorModal.show();
-            })
-            .catch(error => console.error('Error:', error));
-        }
+//                 // Show modal
+//                 var doctorModal = new bootstrap.Modal(document.getElementById('doctorModal'));
+//                 doctorModal.show();
+//             })
+//             .catch(error => console.error('Error:', error));
+//         }
 
-        // Share captured data
-        function shareDoctorInfo() {
-            const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
-            const email = document.getElementById("useremail").value;
-            const password = document.getElementById("password").value;
+//         // Share captured data
+//         function shareDoctorInfo() {
+//             const hospital = document.querySelector("[name='hospital_id']").selectedOptions[0].innerText;
+//             const email = document.getElementById("useremail").value;
+//             const password = document.getElementById("password").value;
 
-            // Here you can implement your share functionality, like copying to clipboard or sending via email
-            // For demonstration, let's just log the data to console
-            console.log("Hospital: " + hospital);
-            console.log("Email: " + email);
-            console.log("Password: " + password);
-        }
+//             // Here you can implement your share functionality, like copying to clipboard or sending via email
+//             // For demonstration, let's just log the data to console
+//             console.log("Hospital: " + hospital);
+//             console.log("Email: " + email);
+//             console.log("Password: " + password);
+//         }
 
     </script>
 
