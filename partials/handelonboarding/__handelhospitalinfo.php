@@ -37,7 +37,7 @@
             $result = mysqli_query($conn, $sql);
 
             if($result){
-                header('location: /project/healthcarepro/onboarding/registrationcomplete.php');
+                header('location: /project/healthcarepro/onboarding/bedinfo.php');
             }
         }
         

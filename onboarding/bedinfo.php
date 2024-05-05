@@ -16,7 +16,7 @@
 
     <div class="container my-4 py-4">
         <div>
-
+            <h2>Add Bed Information: </h2>
             <div class="mb-3">
                 <label for="uploadtype" class="form-label">Upload Method</label>
                 <select class="form-select" aria-label="Default select example" name="uploadtype" id="uploadtype">

@@ -115,7 +115,7 @@ if(!isset($_SESSION['loggedin'])){
                             <td>'.$bedNum.'</td>
                             <td>'.$bedType.'</td>
                             <td><a href="getpatientdetails.php?patientId='.$row['patient_id'].'">'.$row['patient_id'].'</a></td>
-                            <td><img src="../assests/patientfile/'.$row['patient_profile_pic'].'" alt="">'.$row['patient_name'].'</td>
+                            <td><img class="me-2" width="25px" height="25px" src="../assests/patientfile/'.$row['patient_profile_pic'].'" alt="">'.$row['patient_name'].'</td>
                             <td>'.$row['patient_severity'].'</td>
                             <td>'.$row['patient_category'].'</td>
                             <td>'.$row['patient_status'].'</td>

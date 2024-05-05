@@ -28,14 +28,14 @@
 
         <?php
             $user_id = (int)$_SESSION['sno'];
-
+            $hospital_id_g = NULL;
             // getting hospital id according to user id 
             if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'DOC'){
                 $sql = "SELECT * FROM `hospitaldata` WHERE `doctor_id` = '$user_id'";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
                 $hospital_id_g = $row['hospital_id'];
-            } else{
+            } else if(isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'HOA'){
                 $sql = "SELECT * FROM `hospitalinfo` WHERE `user_id`='$user_id'";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
@@ -112,7 +112,7 @@
                             <td>'.$row['bed_availibility'].'</td>
                             <td><a href="#" class="btn btn-primary me-2';
                         echo $row['bed_availibility'] === 'Available' ? '' : ' disabled'; // Adding the 'disabled' class conditionally
-                        echo '">Add patient</a></td>
+                        echo '">Request Bed</a></td>
                         </tr>';
                 }
                 echo '</tbody>
@@ -132,9 +132,12 @@
 
                     <div class="row">';
                     
-
-                $sql = "SELECT * FROM `hospitalinfo` WHERE `hospital_id` <> '$hospital_id_g'";
-                    $result = mysqli_query($conn, $sql);
+                if($hospital_id_g){
+                    $sql = "SELECT * FROM `hospitalinfo` WHERE `hospital_id` <> '$hospital_id_g'";
+                }else{
+                    $sql = "SELECT * FROM `hospitalinfo`";
+                }
+                $result = mysqli_query($conn, $sql);
 
                     while($row = mysqli_fetch_assoc($result)){
                         $hospitalName = $row['hospital_name'];

@@ -62,7 +62,7 @@
             }
         }
         
-        header('location: /project/healthcarepro/onboarding/bedinfo.php?subSuccess=true');
+        header('location: /project/healthcarepro/main/dashboard.php');
         
         // echo json_encode($bedNum);
         // echo json_encode($bedType);
